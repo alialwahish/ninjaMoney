@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../templates/static/stylesheet.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+    <title>Ninja Money</title>
+</head>
+
+<style>
+
+  .form{
+      display: inline-block;
+      text-align: center;
+
+  }
+div{
+    margin-left: 31px;
+    border: 2px solid black;
+    width: 205px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+.yrGld,a{
+    display: block;
+
+      position: relative;
+    left: 27px;
+}
+textarea{
+    margin-left: 31px;
+    width: 93%;
+    height: 100px;
+}
+label{
+    padding-left: 10px;
+    outline: 1px solid;
+    padding-right: 40px;
+    padding-top: 2px;
+    
+}
+</style>
+<body>
+    <p class="yrGld">Your Gold:<label type="text">{{session['gold']}}</p>
+       <div class="form">
+            <form class="frm" action="/process_money" method="post">
+                <h2>Farm</h2>
+                <p>(earns 10-20 golds)</p>
+                <input type="hidden" name="building" value="farm" />
+                <input type="submit" value="Find Gold!"/>
+              </form>
+       </div>
+       <div class="form">
+            <form class="frm" action="/process_money" method="post">
+                <h2>Cave</h2>
+                <p>(earns 5-10 golds)</p>
+                <input type="hidden" name="building" value="Cave" />
+                <input type="submit" value="Find Gold!"/>
+              </form>
+       </div>
+       <div class="form">
+            <form class="frm" action="/process_money" method="post">
+                <h2>House</h2>
+                <p>(earns 2-5 golds)</p>
+                <input type="hidden" name="building" value="House" />
+                <input type="submit" value="Find Gold!"/>
+              </form>
+       </div>
+       <div class="form">
+            <form class="frm" action="/process_money" method="post">
+                <h2>Casino</h2>
+                <p>(earns/takes 0-50 golds)</p>
+                <input type="hidden" name="building" value="Casino" />
+                <input type="submit" value="Find Gold!"/>
+              </form>
+       </div>
+        <p class="yrGld">Activites:</p>
+
+
+                   
+        <textarea name="textarea" id="txtArea"></textarea>
+
+        <script>
+           
+                
+               
+                            
+                
+                </script> 
+
+
+        <a href="/"><button>Reset Ninja Money</button></a>
+         
+        
+</body>
+
+
+
+</html>
