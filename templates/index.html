@@ -13,6 +13,7 @@
 <style>
 
   .form{
+      
       display: inline-block;
       text-align: center;
 
@@ -30,10 +31,12 @@ div{
       position: relative;
     left: 27px;
 }
-textarea{
+#txtArea{
     margin-left: 31px;
     width: 93%;
     height: 100px;
+    height: 200px;
+    overflow:scroll;
 }
 label{
     padding-left: 10px;
@@ -41,6 +44,14 @@ label{
     padding-right: 40px;
     padding-top: 2px;
     
+}
+.lose{
+    color: red;
+    margin: 0px;
+}
+.win{
+    color: green;
+    margin: 0px;
 }
 </style>
 <body>
@@ -79,19 +90,23 @@ label{
        </div>
         <p class="yrGld">Activites:</p>
 
-
-                   
-        <textarea name="textarea" id="txtArea"></textarea>
-
-        <script>
-           
+        
+                           
+        <div name="textarea" id="txtArea">
+        {% for i in session['events']: %}
+            {% if  i[1] < 0  : %}
                 
-               
-                            
+                <p class="lose">Enterd a {{i[0]}} and lost {{i[1]*-1}}... Ouch.. ({{i[2]}})</p>
                 
-                </script> 
+            {%elif i > 0:%}
+                <p class="win">Earned {{i[1]}} golds from the {{i[0]}}! ({{i[2]}})</p>
+            {%endif%}    
+        {%endfor%}
+          
+        </div>
+        
 
-
+       
         <a href="/"><button>Reset Ninja Money</button></a>
          
         

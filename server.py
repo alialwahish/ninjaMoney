@@ -1,20 +1,26 @@
 from flask import Flask, render_template,redirect,request,session
+import datetime
 import random
+
+
 app = Flask(__name__)
 app.secret_key="myKey"
-
+lst=[]
 @app.route('/')
 def index():
+    global lst
+    lst=[]
     session['gold']=0
-    session['actMes']=""
+    session['times']=""
     session['events']=[]
+    
     return render_template("index.html")
 
 @app.route('/process_money',methods=["POST"])
 def process_money():
-    
+    global lst
     if request.form['building'] == "farm":
-        
+        session['building']="Farm"
         print request.form['building']
         session['amount']=random.randrange(10,20)
         
@@ -23,53 +29,39 @@ def process_money():
 
 
     elif request.form['building'] == "Cave":
+        session['building']="Cave"
         session['amount']=random.randrange(4,11)
         session['gold']+=int(session['amount'])
         
 
     elif request.form['building'] == "House":
+        session['building']="House"
         session['amount']=random.randrange(1,6)
         session['gold']+=int(session['amount'])
        
 
     elif request.form['building'] == "Casino":
+        session['building']="Casino"
         print request.form['building']
-        tog =random.randrange(0,2)==1
-        print tog
-        if tog == 1:
-            session['amount']=random.randrange(0,50)
-            session['gold']+=int(session['amount'])
-            
-            session['actMes']="Entered a "+request.form['building']+" and won "+str(session['amount'])+" golds... Yey.."
+      
+        session['amount']=random.randrange(-51,51)
+        session['gold']+=int(session['amount'])
 
-
-        else:
-            session['amount']=random.randrange(0,51)
-            session['gold']-=int(session['amount'])
-            session['actMes']= "Entered a "+request.form['building']+" and lost "+str(session['amount'])+" golds... Ouch.."
-            print "total Gold: ",session['gold']
-
-
-
-            if int(session['gold']<0):
-                print "less than zero"
-                session['gold']=0
-
-        msg = session['actMes']
-        print msg
-        msg=msg
-        print "total Gold: ",session['gold']
-        return render_template('index.html',msg=msg)        
-    
-
-    session['actMes']="Earned "+str(session['amount'])+" golds from the "+request.form['building']+"!"
-    msg = session['actMes']
-    msg=msg
+        session['dateNtime']=datetime.datetime.now()
+        lst.append([session['building'],session['amount'],session['dateNtime']])
+        session['events']=lst
         
-    print msg
-    
-    print "total Gold: ",session['gold']
+        if int(session['gold']<0):
+            print "less than zero"
+            session['gold']=0
 
-    return render_template('index.html',msg=msg)
+        print "total Gold: ",session['gold']
+        return render_template('index.html')        
+   
+    print "total Gold: ",session['gold']
+    session['dateNtime']=datetime.datetime.now()
+    lst.append([session['building'],session['amount'],session    ['dateNtime']])
+    session['events']=lst
+    return render_template('index.html')
 
 app.run(debug=True)
